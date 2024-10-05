@@ -1,4 +1,9 @@
-from flask import Flask, request
+from flask import Flask, request,render_template
+from endpoints.BoxIdScanner import BoxIDScanner
+from endpoints.EmployeeIdScanner import EmployeeIDScanner
+from endpoints.JobIdScanner import JobIDScanner
+from endpoints.PartIdScanner import PartIDScanner
+
 
 app = Flask(__name__)
 
@@ -15,53 +20,52 @@ validBoxLabels = {
 }
 
 @app.route("/")
-def hello_world():
-    return "<p>Hello, World!</p>"
+def emp_scan_page():
+    return render_template('index.html')
+
+@app.route("/ScanJobCode")
+def job_scan_page():
+    return render_template('scanJobCode.html')
+
+@app.route("/ValidateBoxLabel")
+def parts_scan_page():
+    return render_template('validateBoxLabel.html')
+
+@app.route("/ValidatePartsLabel")
+def box_scan_page():
+    return render_template('validatePartsLabel.html')
+
 
 @app.route("/Scan/EmployeeId", methods=['GET'])
 def scan_id():
-    # Get the ID 
     employeeId = request.args.get('id')
-    
-    # Check validity
-    if validEmployeeIds.contains(employeeId):
-        return 200;
-    
-    # If the valid ID isn't in our hard-coded acceptable IDs, then we return 400 to indicate this was invalid
-    return 400;
+    return EmployeeIDScanner.scan_employee_id(employeeId)
 
 @app.route("/Scan/Jobsheet", methods=['GET'])
 def scan_jobsheet():
     # TODO: We want to return the URI for next page to redirect to. TBD?
-    return 501;
+    jobId = request.args.get('id')
+    return JobIDScanner.scan_job_id(jobId)
     
 @app.route("/Scan/PartLabel", methods=['GET'])
 def scan_part():
     partLabel = request.args.get('id')
-    
-    if validPartLabels.contains(partLabel):
-        return 200
-    return 400
+    return PartIDScanner.scan_part_id(partLabel)
 
 
 @app.route("/Scan/BoxLabel", methods=['GET'])
 def scan_box():
     boxLabel = request.args.get('id')
-    
-    if validBoxLabels.contains(boxLabel):
-        return 200
-    return 400
+    return BoxIDScanner.scan_box_id(boxLabel)
 
 @app.route("/Job/Start", methods=['POST'])
 def start_job():
     # Mark job as started
-    
     return 200
 
 @app.route("/Job/End", methods=['POST'])
 def end_job():
     # Mark job as ended
-    
     return 200
 
 
