@@ -7,20 +7,24 @@
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <header>WhirlTronics</header>
+    <header>
+        <img src="/static/assets/logo.png" alt="WhirlTronics Logo">
+        <h1>WhirlTronics</h1>
+    </header>
     <div class="container">
         <div class="icon-container">
-            <img class="sign-in-icon" src="/static/assets/employee-icon.svg" alt="Sign In">
+            <img class="description-icon" src="/static/assets/employee-icon.svg" alt="Sign In">
         </div>
         <h1>Scan Emp ID</h1>
         <form id="emp-form" onsubmit="submitForm(event)">
             <input type="text" id="emp-id" placeholder="Enter Employee ID" autofocus>
             <div class="button" onclick="submitForm(event)">
-                Continue
+                <svg id="Layer_1" class="sign-in-icon" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 122.88"><title>round-black-right-arrow</title><path d="M61.45,122.85v0h0A61.39,61.39,0,0,1,0,61.45H0v0H0A61.38,61.38,0,0,1,61.43,0V0h0V0a61.35,61.35,0,0,1,61.38,61.4h0v0h0a61.34,61.34,0,0,1-61.4,61.38ZM94.22,61.44l-34.32-31V50.25H36V72.62H59.89V92.4l34.33-31Z"/></svg>
             </div>
         </form>
         <div id="error-message" class="error-message" style="display: none;">
-            Invalid Employee ID
+            <span class="red-light"></span>
+            <span class="error-message-label" > Invalid ID </span>
         </div>
     </div>
 </body>
@@ -46,11 +50,11 @@
                 window.location.href = data.redirect_url;
             }
             else {
-                const employeeId = document.getElementById('emp-id').value;
                 const errorMessage = document.getElementById('error-message');
-                errorMessage.textContent = "Invalid Employee ID";
-                errorMessage.classList.add("visible")
-                //console.error('No redirect URL provided');
+                const errorMessageLabel = document.querySelector('.error-message-label');
+                errorMessageLabel.textContent = "Invalid Employee ID";
+                errorMessage.classList.add("visible");
+                document.getElementById('emp-id').value = '';
             }
         })
         .catch(error => {
