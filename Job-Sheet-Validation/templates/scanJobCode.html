@@ -4,56 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Label Validation</title>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            height: 100vh;
-            margin: 0;
-            background-color: #f0f0f0;
-            font-family: Arial, sans-serif;
-        }
-
-        header {
-            font-size: 50px;
-            color: #007bff;
-            font-weight: bold;
-            margin-bottom: 40px;
-        }
-
-        .container {
-            text-align: center;
-            width: 100%;
-        }
-
-        h1 {
-            font-size: 60px;
-            margin-bottom: 40px;
-            color: #333;
-        }
-
-        input[type="text"] {
-            width: 60%;
-            padding: 20px;
-            font-size: 40px;
-            border-radius: 10px;
-            border: 3px solid #ccc;
-            margin-top: 20px;
-        }
-
-        input[type="text"]:focus {
-            border-color: #007bff;
-            outline: none;
-        }
-    </style>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
     <header>WhirlTronics</header>
     <div class="container">
         <h1>Scan Job Id</h1>
-        <input type="text" id="job-id" placeholder="Enter Job ID" autofocus>
+        <form id="job-form" onsubmit="submitJobForm(event)">
+            <input type="text" id="job-id" placeholder="Enter Job ID" autofocus>
+            <div class="button" onclick="submitJobForm(event)">Submit Job</div>
+        </form>
     </div>
 </body>
 </html>
+
+<script>
+    function submitJobForm(event) {
+        event.preventDefault();
+        const jobId = document.getElementById('job-id').value;
+        if (!jobId) {
+            alert("Please enter a Job ID");
+            return;
+        }
+        fetch(`/Scan/Jobsheet?id=${jobId}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.redirect_url) {
+                window.location.href = data.redirect_url;
+            } else {
+                console.error('No redirect URL provided');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+</script>
