@@ -1,4 +1,5 @@
-from flask import Flask, request,render_template
+from flask import Flask, request,render_template, jsonify
+
 from endpoints.BoxIdScanner import BoxIDScanner
 from endpoints.EmployeeIdScanner import EmployeeIDScanner
 from endpoints.JobIdScanner import JobIDScanner
@@ -35,22 +36,23 @@ def parts_scan_page():
 def box_scan_page():
     return render_template('validatePartsLabel.html')
 
-
 @app.route("/Scan/EmployeeId", methods=['GET'])
 def scan_id():
     employeeId = request.args.get('id')
-    return EmployeeIDScanner.scan_employee_id(employeeId)
+    #EmployeeIDScanner.scan_femployee_id(employeeId)
+    return jsonify({"redirect_url": "/ScanJobCode"})
 
 @app.route("/Scan/Jobsheet", methods=['GET'])
 def scan_jobsheet():
     jobId = request.args.get('id')
-    return JobIDScanner.scan_job_id(jobId)
+    #JobIDScanner.scan_job_id(jobId)
+    return jsonify({"redirect_url": "/ValidatePartsLabel"})
+
     
 @app.route("/Scan/PartLabel", methods=['GET'])
 def scan_part():
     partLabel = request.args.get('id')
     return PartIDScanner.scan_parts_id(partLabel)
-
 
 @app.route("/Scan/BoxLabel", methods=['GET'])
 def scan_box():
@@ -59,12 +61,11 @@ def scan_box():
 
 @app.route("/Job/Start", methods=['POST'])
 def start_job():
-    # Mark job as started
+    
     return 200
 
 @app.route("/Job/End", methods=['POST'])
 def end_job():
-    # Mark job as ended
     return 200
 
 

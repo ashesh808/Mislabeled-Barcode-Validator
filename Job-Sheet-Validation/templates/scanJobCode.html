@@ -10,7 +10,38 @@
     <header>WhirlTronics</header>
     <div class="container">
         <h1>Scan Job Id</h1>
-        <input type="text" id="job-id" placeholder="Enter Job ID" autofocus>
+        <form id="job-form" onsubmit="submitJobForm(event)">
+            <input type="text" id="job-id" placeholder="Enter Job ID" autofocus>
+            <div class="button" onclick="submitJobForm(event)">Submit Job</div>
+        </form>
     </div>
 </body>
 </html>
+
+<script>
+    function submitJobForm(event) {
+        event.preventDefault();
+        const jobId = document.getElementById('job-id').value;
+        if (!jobId) {
+            alert("Please enter a Job ID");
+            return;
+        }
+        fetch(`/Scan/Jobsheet?id=${jobId}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.redirect_url) {
+                window.location.href = data.redirect_url;
+            } else {
+                console.error('No redirect URL provided');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+</script>
