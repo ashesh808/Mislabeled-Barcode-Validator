@@ -1,4 +1,4 @@
-from flask import redirect, url_for
+from flask import jsonify, redirect, url_for
 
 
 class BoxIDScanner:
@@ -7,5 +7,5 @@ class BoxIDScanner:
 
     def scan_box_id(self, box_id):
         if box_id in self.box_part_ids:
-            return redirect(url_for("/ScanJobCode"))
+            return jsonify({"redirect_url": "/"})
         return 400

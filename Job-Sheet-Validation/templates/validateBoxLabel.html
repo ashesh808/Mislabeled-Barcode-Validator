@@ -1,16 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Label Validation</title>
     <link rel="stylesheet" href="/static/style.css">
+    <script>
+        function submitBoxForm(event) {
+            event.preventDefault();
+            const boxId = document.getElementById('box-id').value;
+            if (!boxId) {
+                alert("Please enter a box ID.");
+                return;
+            }
+
+            console.log(`Box ID: ${boxId}`);
+            fetch(`/Scan/BoxLabel?id=${boxId}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application-json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.redirect_url)
+            {
+                window.location.href = data.redirect_url
+            } else {
+                console.error(`No redirect URL provided`);
+            }
+            })
+            .catch(error => {
+                console.error(`Error: ${error}`);
+            })
+        }
+    </script>
 </head>
+
 <body>
     <header>WhirlTronics</header>
     <div class="container">
         <h1>Scan Box label</h1>
-        <input type="text" id="box-id" placeholder="Enter Box ID" autofocus>
+        <form id="box-form" onsubmit="submitBoxForm(event)">
+            <input type="text" id="box-id" placeholder="Enter Box ID" autofocus>
+            <div class="button" onclick="submitBoxForm(event)">Submit Label</div>
+        </form>
     </div>
 </body>
+
 </html>

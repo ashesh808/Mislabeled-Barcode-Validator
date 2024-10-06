@@ -58,7 +58,8 @@ def scan_part():
 @app.route("/Scan/BoxLabel", methods=['GET'])
 def scan_box():
     boxLabel = request.args.get('id')
-    return BoxIDScanner.scan_box_id(boxLabel)
+    # return BoxIDScanner.scan_box_id(boxLabel)
+    return jsonify({"redirect_url": "/"})
 
 @app.route("/Job/Start", methods=['POST'])
 def start_job():
