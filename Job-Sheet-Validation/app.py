@@ -49,7 +49,11 @@ def scan_id():
     emp_scanner = EmployeeIDScanner(validEmployeeIds)
     if emp_scanner.scan_employee_id(employeeId):
         return jsonify({"redirect_url": "/ScanJobCode"})
+<<<<<<< HEAD
     return '404'
+=======
+    return "404"
+>>>>>>> 1459f538b2ed383c51635a07c7a036d797045fcb
 
 @app.route("/Scan/Jobsheet", methods=['GET'])
 def scan_jobsheet():
@@ -57,7 +61,7 @@ def scan_jobsheet():
     job_scanner = JobIDScanner(validJobs)
     if job_scanner.scan_job_id(jobId):
         return jsonify({"redirect_url": "/ValidatePartsLabel"})
-    return 404
+    return "404"
 
     
 @app.route("/Scan/PartLabel", methods=['GET'])
@@ -66,7 +70,7 @@ def scan_part():
     parts_scanner = PartIDScanner(validPartLabels)
     if parts_scanner.scan_parts_id(partLabel):
         return jsonify({"redirect_url": "/ValidateBoxLabel"})
-    return 404
+    return "404"
 
 @app.route("/Scan/BoxLabel", methods=['GET'])
 def scan_box():
@@ -74,15 +78,15 @@ def scan_box():
     box_scanner = BoxIDScanner(boxLabel)
     if box_scanner.scan_box_id(boxLabel):
         return jsonify({"redirect_url": "/ScanJobCode"})
-    return 404
+    return "404"
 
 @app.route("/Job/Start", methods=['POST'])
 def start_job():
-    return 200
+    return "200"
 
 @app.route("/Job/End", methods=['POST'])
 def end_job():
-    return 200
+    return "200"
 
 if __name__ == '__main__':
     app.run(debug=True)
