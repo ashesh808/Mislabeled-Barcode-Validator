@@ -47,14 +47,14 @@ def box_scan_page():
 def scan_id():
     employeeId = request.args.get('id')
     emp_scanner = EmployeeIDScanner(validEmployeeIds)
-    if emp_scanner.scan_femployee_id(employeeId):
+    if emp_scanner.scan_employee_id(employeeId):
         return jsonify({"redirect_url": "/ScanJobCode"})
     return 404
 
 @app.route("/Scan/Jobsheet", methods=['GET'])
 def scan_jobsheet():
     jobId = request.args.get('id')
-    job_scanner = JobIDScanner()
+    job_scanner = JobIDScanner(validJobs)
     if job_scanner.scan_job_id(jobId):
         return jsonify({"redirect_url": "/ValidatePartsLabel"})
     return 404
