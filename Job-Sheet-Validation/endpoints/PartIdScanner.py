@@ -1,3 +1,5 @@
+from flask import redirect, url_for
+
 class PartIDScanner:
     def __init__(self, valid_part_ids):
         self.valid_part_ids = valid_part_ids
@@ -5,5 +7,5 @@ class PartIDScanner:
     def scan_parts_id(self, part_id):
         # Check if the employee ID is valid
         if part_id in self.valid_part_ids:
-            return 200
+            return redirect(url_for("/ValidatePartsLabel"))
         return 400
