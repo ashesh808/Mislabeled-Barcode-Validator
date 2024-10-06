@@ -9,15 +9,22 @@ from endpoints.PartIdScanner import PartIDScanner
 app = Flask(__name__)
 
 validEmployeeIds = {
-    'placeholder' # todo
-}
-
-validPartLabels = {
-    'placeholder' # todo
+    '20102913120564',
+    '20102913016762',
+    '1119802303369'
 }
 
 validBoxLabels = {
-    'placeholder' # todo
+    '103-6402-S',
+    '103-6402-S',
+}
+
+validPartLabels = {
+    '021038595344'
+}
+
+validJobs = {
+    '169345'
 }
 
 @app.route("/")
