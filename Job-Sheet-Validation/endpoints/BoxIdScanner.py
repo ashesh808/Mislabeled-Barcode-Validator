@@ -1,3 +1,4 @@
+
 class BoxIDScanner:
     def __init__(self, box_part_ids):
         self.box_part_ids = box_part_ids

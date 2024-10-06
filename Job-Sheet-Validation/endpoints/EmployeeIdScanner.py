@@ -1,3 +1,5 @@
+
+
 class EmployeeIDScanner:
     def __init__(self, valid_employee_ids):
         self.valid_employee_ids = valid_employee_ids

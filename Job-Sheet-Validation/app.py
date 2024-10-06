@@ -43,14 +43,13 @@ def scan_id():
 
 @app.route("/Scan/Jobsheet", methods=['GET'])
 def scan_jobsheet():
-    # TODO: We want to return the URI for next page to redirect to. TBD?
     jobId = request.args.get('id')
     return JobIDScanner.scan_job_id(jobId)
     
 @app.route("/Scan/PartLabel", methods=['GET'])
 def scan_part():
     partLabel = request.args.get('id')
-    return PartIDScanner.scan_part_id(partLabel)
+    return PartIDScanner.scan_parts_id(partLabel)
 
 
 @app.route("/Scan/BoxLabel", methods=['GET'])
