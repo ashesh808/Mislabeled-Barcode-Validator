@@ -52,7 +52,8 @@ def scan_jobsheet():
 @app.route("/Scan/PartLabel", methods=['GET'])
 def scan_part():
     partLabel = request.args.get('id')
-    return PartIDScanner.scan_parts_id(partLabel)
+    # return PartIDScanner.scan_parts_id(partLabel)
+    return jsonify({"redirect_url": "/ValidateBoxLabel"})
 
 @app.route("/Scan/BoxLabel", methods=['GET'])
 def scan_box():

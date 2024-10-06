@@ -1,4 +1,4 @@
-from flask import redirect, url_for
+from flask import jsonify, redirect, url_for
 
 
 class PartIDScanner:
@@ -7,5 +7,4 @@ class PartIDScanner:
 
     def scan_parts_id(self, part_id):
         if part_id in self.valid_part_ids:
-            return redirect(url_for("/ValidatePartsLabel"))
-        return 400
+            return jsonify({"redirect_url": "/Scan/BoxLabel"})

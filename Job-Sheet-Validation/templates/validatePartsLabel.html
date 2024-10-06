@@ -1,19 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Label Validation</title>
     <link rel="stylesheet" href="/static/style.css">
+    <script>
+        function submitPartForm(event) {
+            event.preventDefault();
+            const partId = document.getElementById('part-id').value;
+            if (!partId) {
+                alert("Please enter a Part ID");
+                return;
+            }
+
+            console.log(`partId ${partId} retrieved`);
+            fetch(`/Scan/PartLabel?id=${partId}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.redirect_url) {
+                        window.location.href = data.redirect_url;
+                    } else {
+                        console.error('No redirect URL provided');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+    </script>
 </head>
+
 <body>
     <header>WhirlTronics</header>
     <div class="container">
         <h1>Scan Parts Label</h1>
-        <input type="text" id="part-id" placeholder="Enter Part ID" autofocus>
+        <form id="part-form" onsubmit="submitPartForm(event)">
+            <input type="text" id="part-id" placeholder="Enter Part ID" autofocus>
+            <div class="button" onclick="submitPartForm(event)">Submit Label</div>
+        </form>
     </div>
 </body>
+
 </html>
-
-
-
