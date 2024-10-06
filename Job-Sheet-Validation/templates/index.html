@@ -9,11 +9,19 @@
 <body>
     <header>WhirlTronics</header>
     <div class="container">
+        <div class="icon-container">
+            <img class="sign-in-icon" src="/static/assets/employee-icon.svg" alt="Sign In">
+        </div>
         <h1>Scan Emp ID</h1>
         <form id="emp-form" onsubmit="submitForm(event)">
             <input type="text" id="emp-id" placeholder="Enter Employee ID" autofocus>
-            <div class="button" onclick="submitForm(event)">Submit</div>
+            <div class="button" onclick="submitForm(event)">
+                Continue
+            </div>
         </form>
+        <div id="error-message" class="error-message" style="display: none;">
+            Invalid Employee ID
+        </div>
     </div>
 </body>
 </html>
@@ -36,8 +44,13 @@
         .then(data => {
             if (data.redirect_url) {
                 window.location.href = data.redirect_url;
-            } else {
-                console.error('No redirect URL provided');
+            }
+            else {
+                const employeeId = document.getElementById('emp-id').value;
+                const errorMessage = document.getElementById('error-message');
+                errorMessage.textContent = "Invalid Employee ID";
+                errorMessage.classList.add("visible")
+                //console.error('No redirect URL provided');
             }
         })
         .catch(error => {
