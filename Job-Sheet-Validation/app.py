@@ -49,7 +49,7 @@ def scan_id():
     emp_scanner = EmployeeIDScanner(validEmployeeIds)
     if emp_scanner.scan_employee_id(employeeId):
         return jsonify({"redirect_url": "/ScanJobCode"})
-    return "404"
+    return '404'
 
 @app.route("/Scan/Jobsheet", methods=['GET'])
 def scan_jobsheet():
